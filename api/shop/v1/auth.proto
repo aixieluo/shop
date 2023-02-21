@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package api.shop.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "/api/shop/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.shop.v1";
+
+service Auth {
+	rpc Register (RegisterRequest) returns (RegisterReply) {
+		option(google.api.http) = {
+			post: "/api/auth/register",
+			body: "*",
+		};
+	};
+	rpc Login (LoginRequest) returns (LoginReply) {
+		option(google.api.http) = {
+			post: "/api/auth/login",
+			body: "*",
+		};
+	};
+	rpc Captcha (google.protobuf.Empty) returns (CaptchaReply) {
+		option(google.api.http) = {
+			post: "/api/auth/captcha",
+			body: "*"
+		};
+	};
+	rpc ModifyPassword (ModifyPasswordRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			post: "/api/auth/password/modify",
+			body: "*",
+		};
+	};
+}
+
+message RegisterRequest {
+	reserved 1;
+	string password = 2;
+	string mobile = 3;
+	string captcha_id = 4;
+	string captcha = 5;
+}
+
+message RegisterReply {
+	string token = 1;
+}
+
+message ModifyPasswordRequest {
+	reserved 1;
+	string new_password = 2;
+	string new_confirm_password = 3;
+}
+
+message LoginRequest {
+	string mobile = 1;
+	string password = 2;
+}
+message LoginReply {
+	string token = 1;
+}
+
+message CaptchaReply {
+	string captcha_id = 4;
+	string captcha_pic = 5;
+}

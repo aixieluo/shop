@@ -1,0 +1,121 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: Auth API
+    version: 0.0.1
+paths:
+    /api/auth/captcha:
+        post:
+            tags:
+                - Auth
+            operationId: Auth_Captcha
+            requestBody:
+                content:
+                    application/json: {}
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.shop.v1.CaptchaReply'
+    /api/auth/login:
+        post:
+            tags:
+                - Auth
+            operationId: Auth_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.shop.v1.LoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.shop.v1.LoginReply'
+    /api/auth/password/modify:
+        post:
+            tags:
+                - Auth
+            operationId: Auth_ModifyPassword
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.shop.v1.ModifyPasswordRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /api/auth/register:
+        post:
+            tags:
+                - Auth
+            operationId: Auth_Register
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.shop.v1.RegisterRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.shop.v1.RegisterReply'
+components:
+    schemas:
+        api.shop.v1.CaptchaReply:
+            type: object
+            properties:
+                captchaId:
+                    type: string
+                captchaPic:
+                    type: string
+        api.shop.v1.LoginReply:
+            type: object
+            properties:
+                token:
+                    type: string
+        api.shop.v1.LoginRequest:
+            type: object
+            properties:
+                mobile:
+                    type: string
+                password:
+                    type: string
+        api.shop.v1.ModifyPasswordRequest:
+            type: object
+            properties:
+                newPassword:
+                    type: string
+                newConfirmPassword:
+                    type: string
+        api.shop.v1.RegisterReply:
+            type: object
+            properties:
+                token:
+                    type: string
+        api.shop.v1.RegisterRequest:
+            type: object
+            properties:
+                password:
+                    type: string
+                mobile:
+                    type: string
+                captchaId:
+                    type: string
+                captcha:
+                    type: string
+tags:
+    - name: Auth
