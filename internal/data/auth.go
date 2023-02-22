@@ -25,6 +25,7 @@ func (a *AuthRepo) CreateUser(ctx context.Context, u *biz.User) (*biz.User, erro
 		Mobile:   u.Mobile,
 		Password: u.Password,
 		Nickname: u.Nickname,
+		Email:    "",
 	})
 	if err != nil {
 		return nil, err

@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
+	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/go-kratos/swagger-api/openapiv2"
 	v1 "shop/api/shop/v1"
@@ -15,6 +16,7 @@ func NewHTTPServer(c *conf.Server, authService *service.AuthService, logger log.
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
+			tracing.Server(),
 		),
 	}
 	if c.Http.Network != "" {

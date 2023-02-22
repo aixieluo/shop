@@ -4,6 +4,12 @@ import (
 	"flag"
 	"fmt"
 	"github.com/go-kratos/kratos/v2/registry"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/exporters/jaeger"
+	"go.opentelemetry.io/otel/sdk/resource"
+	tracesdk "go.opentelemetry.io/otel/sdk/trace"
+	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 	"os"
 
 	"shop/internal/conf"
@@ -22,7 +28,7 @@ import (
 // go build -ldflags "-X main.Version=x.y.z"
 var (
 	// Name is the name of the compiled software.
-	Name string = "shop"
+	Name string = "shop.api"
 	// Version is the version of the compiled software.
 	Version string = "v1"
 	// flagconf is the config flag.
@@ -50,6 +56,28 @@ func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server, rc registry.Reg
 	)
 }
 
+// Set global trace provider 设置链路追逐的方法
+func setTracerProvider(url string) error {
+	// Create the Jaeger exporter
+	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(url)))
+	if err != nil {
+		return err
+	}
+	tp := tracesdk.NewTracerProvider(
+		// Set the sampling rate based on the parent span to 100%
+		tracesdk.WithSampler(tracesdk.ParentBased(tracesdk.TraceIDRatioBased(1.0))),
+		// Always be sure to batch in production.
+		tracesdk.WithBatcher(exp),
+		// Record information about this application in an Resource.
+		tracesdk.WithResource(resource.NewSchemaless(
+			semconv.ServiceNameKey.String(Name),
+			attribute.String("env", "dev"),
+		)),
+	)
+	otel.SetTracerProvider(tp)
+	return nil
+}
+
 func main() {
 	flag.Parse()
 	logger := log.With(log.NewStdLogger(os.Stdout),
@@ -74,6 +102,11 @@ func main() {
 
 	var bc conf.Bootstrap
 	if err := c.Scan(&bc); err != nil {
+		panic(err)
+	}
+
+	// 加入链路追踪的配置
+	if err := setTracerProvider(bc.Trace.Endpoint); err != nil {
 		panic(err)
 	}
 

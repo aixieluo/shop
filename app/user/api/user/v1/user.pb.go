@@ -81,7 +81,7 @@ type ListUserReply struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	//  int32 page = 1;
+	// int32 page = 1;
 	Total int32           `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
 	Data  []*GetUserReply `protobuf:"bytes,3,rep,name=data,proto3" json:"data,omitempty"`
 }
@@ -185,7 +185,7 @@ type GetUserReply struct {
 	unknownFields protoimpl.UnknownFields
 
 	Id uint64 `protobuf:"varint,6,opt,name=id,proto3" json:"id,omitempty"`
-	//  string username = 1;
+	// string username = 1;
 	Nickname string `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"`
 	Email    string `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
 	Mobile   string `protobuf:"bytes,4,opt,name=mobile,proto3" json:"mobile,omitempty"`
@@ -256,7 +256,7 @@ type CreateUserRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	//  string username = 1;
+	// string username = 1;
 	Nickname string `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"`
 	Email    string `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
 	Mobile   string `protobuf:"bytes,4,opt,name=mobile,proto3" json:"mobile,omitempty"`
@@ -329,7 +329,7 @@ type CreateUserReply struct {
 	unknownFields protoimpl.UnknownFields
 
 	Id uint64 `protobuf:"varint,6,opt,name=id,proto3" json:"id,omitempty"`
-	//  string username = 1;
+	// string username = 1;
 	Nickname string `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"`
 	Email    string `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
 	Mobile   string `protobuf:"bytes,4,opt,name=mobile,proto3" json:"mobile,omitempty"`
@@ -401,7 +401,7 @@ type UpdateUserRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	Id uint64 `protobuf:"varint,6,opt,name=id,proto3" json:"id,omitempty"`
-	//  string username = 1;
+	// string username = 1;
 	Nickname string `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"`
 	Email    string `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
 	Mobile   string `protobuf:"bytes,4,opt,name=mobile,proto3" json:"mobile,omitempty"`

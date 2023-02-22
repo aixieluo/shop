@@ -1,10 +1,10 @@
 name: shop.api
 server:
   http:
-    addr: 0.0.0.0:8097
+    addr: 0.0.0.0:8000
     timeout: 1s
   grpc:
-    addr: 0.0.0.0:9001
+    addr: 0.0.0.0:9000
     timeout: 1s
 data:
   database:
@@ -20,6 +20,6 @@ auth:
   jwt_key: hqFr%3ddt32DGlSTOI5cO6@TH#fFwYnP$S
 service:
   user:
-    endpoint: discovery:///shop.user.service
+    endpoint: discovery:///shop.users.service
   goods:
     endpoint: discovery:///shop.goods.service

@@ -30,7 +30,6 @@ func Init() {
 
 func TestCreateUser() {
 	rsp, err := userClient.CreateUser(context.Background(), &v1.CreateUserRequest{
-		Username: "aixiela",
 		Nickname: "ajks",
 		Email:    "adsjk@ask.com",
 		Mobile:   "14141241241",

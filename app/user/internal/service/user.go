@@ -68,7 +68,6 @@ func (us UserService) CreateUser(ctx context.Context, request *v1.CreateUserRequ
 		Mobile:   request.Mobile,
 		Password: request.Password,
 		Nickname: request.Nickname,
-		Username: request.Username,
 		Email:    request.Email,
 	})
 	if err != nil {
@@ -77,7 +76,6 @@ func (us UserService) CreateUser(ctx context.Context, request *v1.CreateUserRequ
 
 	userInfo := &v1.CreateUserReply{
 		Id:       user.ID,
-		Username: user.Username,
 		Nickname: user.Nickname,
 		Email:    user.Email,
 		Mobile:   user.Mobile,

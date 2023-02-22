@@ -10,6 +10,7 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/google/wire"
 	consulAPI "github.com/hashicorp/consul/api"
+	grpcx "google.golang.org/grpc"
 	"time"
 
 	userV1 "shop/api/user/v1"
@@ -47,6 +48,7 @@ func NewUserServiceClient(ac *conf.Auth, sr *conf.Service, rr registry.Discovery
 			recovery.Recovery(),
 		),
 		grpc.WithDiscovery(rr),
+		grpc.WithOptions(grpcx.WithStatsHandler(&tracing.ClientHandler{})),
 	)
 	if err != nil {
 		panic(err)
