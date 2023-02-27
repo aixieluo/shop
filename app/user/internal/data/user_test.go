@@ -17,7 +17,6 @@ var _ = Describe("User CURD", func() {
 			Mobile:   "17521066239",
 			Password: "123123",
 			Nickname: "39",
-			Username: "aixieluo",
 			Email:    "admin@aixieluo.com",
 		}
 	})

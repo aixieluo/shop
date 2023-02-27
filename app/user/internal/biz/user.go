@@ -17,7 +17,6 @@ var (
 // User is a User model.
 type User struct {
 	ID       uint64 `json:"id,omitempty"`
-	Username string `json:"username,omitempty"`
 	Nickname string `json:"nickname,omitempty"`
 	Email    string `json:"email,omitempty"`
 	Mobile   string `json:"mobile,omitempty"`

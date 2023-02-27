@@ -14,7 +14,6 @@ import (
 
 type User struct {
 	ID        uint       `gorm:"primarykey"`
-	Username  string     `json:"username,omitempty" gorm:"index:idx_username;unique;type:varchar(20) comment '用户名';not null"`
 	Nickname  string     `json:"nickname,omitempty" gorm:"idx_nickname;type:varchar(40) comment '昵称';not null"`
 	Email     string     `json:"email,omitempty" gorm:"idx_email;type:varchar(50) comment '邮箱';not null"`
 	Mobile    string     `json:"mobile,omitempty" gorm:"idx_mobile;type:varchar(11) comment '手机号';not null"`
@@ -51,9 +50,9 @@ func (r *UserRepo) List(ctx context.Context, page int, perPage int) ([]*biz.User
 	for _, user := range users {
 		rv = append(rv, &biz.User{
 			ID:       uint64(user.ID),
-			Nickname: user.Username,
-			Email:    user.Nickname,
-			Mobile:   user.Email,
+			Nickname: user.Nickname,
+			Email:    user.Email,
+			Mobile:   user.Mobile,
 		})
 	}
 	return rv, int(total), nil
@@ -71,12 +70,11 @@ func (r *UserRepo) FindByID(ctx context.Context, id uint) (*biz.User, error) {
 
 func (r *UserRepo) Create(ctx context.Context, bu *biz.User) (*biz.User, error) {
 	var u User
-	result := r.data.db.Where(&biz.User{Username: bu.Username}).First(&u)
+	result := r.data.db.Where(&biz.User{Mobile: bu.Mobile}).First(&u)
 	if result.RowsAffected == 1 {
 		return nil, status.Errorf(codes.AlreadyExists, "用户已存在")
 	}
 
-	u.Username = bu.Username
 	u.Nickname = bu.Nickname
 	u.Password = encrypt(bu.Password)
 	u.Mobile = bu.Mobile

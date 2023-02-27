@@ -28,7 +28,6 @@ func verify(pwd, encryptedPwd string) (bool, error) {
 func modelToResponse(user User) biz.User {
 	return biz.User{
 		ID:       uint64(user.ID),
-		Username: user.Username,
 		Nickname: user.Nickname,
 		Email:    user.Email,
 		Mobile:   user.Mobile,
