@@ -22,4 +22,4 @@ EXPOSE 9000
 VOLUME /data/conf
 
 #CMD ["./server", "-conf", "/data/conf"]
-CMD ["./shop", "-conf", "/data/conf"]
+#ENTRYPOINT ["./shop", "-conf", "/data/conf"]

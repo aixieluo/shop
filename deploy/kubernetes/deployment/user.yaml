@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-deployment
+  namespace: dev
+spec:
+#  strategy:
+#    rollingUpdate:
+#      maxSurge: 1
+#      maxUnavailable: 1
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-pod
+  template:
+    metadata:
+      labels:
+        app: user-pod
+    spec:
+      containers:
+        - name: user-container
+          image: aixieluo/shop:v1.0.1
+          ports:
+            - containerPort: 8002
+              name: http
+            - containerPort: 9002
+              name: grpc
+          volumeMounts:
+            - mountPath: /data/conf
+              name: user-config
+      volumes:
+        - name: user-config
+          configMap:
+            name: user-config
+      restartPolicy: Always
+

@@ -1,6 +1,6 @@
 FROM golang:1.19 AS builder
 
-COPY . /src
+COPY ../../ /src
 WORKDIR /src
 
 RUN GOPROXY=https://goproxy.cn make build
@@ -22,4 +22,4 @@ EXPOSE 9002
 VOLUME /data/conf
 
 #CMD ["./shop", "-conf", "/data/conf"]
-CMD ["./user"]
+#ENTRYPOINT ["./user", "-conf", "/data/conf"]

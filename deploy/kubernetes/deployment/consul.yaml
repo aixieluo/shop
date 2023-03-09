@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: consul-cluster-ip
+spec:
+  selector:
+    app: consul
+  type: ClusterIP
+  ports:
+    - port: 8500
+      targetPort: 8500
+      name: http
+    - port: 8300
+      targetPort: 8300
+      name: tcp1
+    - port: 8301
+      targetPort: 8301
+      name: upd2
+    - port: 8302
+      targetPort: 8302
+      name: udp1
+    - port: 8600
+      targetPort: 8600
+      name: udp
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consul
+  labels:
+    app: consul
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consul
+  template:
+    metadata:
+      labels:
+        app: consul
+    spec:
+      containers:
+        - name: consul
+          image: consul:latest
+          ports:
+            - containerPort: 8500
+            - containerPort: 8300
+            - containerPort: 8301
+            - containerPort: 8302
+            - containerPort: 8600
+          args: [ "agent", "-dev", "-ui", "-client", "0.0.0.0" ]
+          volumeMounts:
+            - name: consul-data
+              mountPath: /consul/data
+      volumes:
+        - name: consul-data
+          emptyDir: { }

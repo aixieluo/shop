@@ -62,7 +62,20 @@ generate:
 all:
 	make api;
 	make config;
-	make generate;
+	make generate
+
+.PHONY: image
+image:
+	docker build . -t aixieluo/shop:$(VERSION)
+
+.PHONY: push
+push:
+	docker push aixieluo/shop:$(VERSION)
+
+.PHONY: deploy
+deploy:
+	make image;
+	make push
 
 # show help
 help:

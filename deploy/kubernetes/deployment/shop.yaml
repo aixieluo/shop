@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-deployment
+  namespace: dev
+spec:
+#  strategy:
+#    rollingUpdate:
+#      maxSurge: 1
+#      maxUnavailable: 1
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shop-pod
+  template:
+    metadata:
+      labels:
+        app: shop-pod
+    spec:
+      containers:
+        - name: shop-container
+          image: aixieluo/shop:v1.0.1
+          ports:
+            - containerPort: 8000
+              name: http
+            - containerPort: 9000
+              name: grpc
+          volumeMounts:
+            - mountPath: /data/conf
+              name: shop-config
+      volumes:
+        - name: shop-config
+          configMap:
+            name: shop-config
+      restartPolicy: Always
+
